@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DomainDrivenDatabaseDeployer;
 using FizzWare.NBuilder;
+using MiniTrello.Api.Models.Helper;
 using MiniTrello.Domain.Entities;
 using NHibernate;
 
@@ -15,7 +16,7 @@ namespace MiniTrello.DatabaseDeployer
             _session = session;
         }
 
-        public void Seed()
+       /* public void Seed()
         {
             IList<Account> accountList = Builder<Account>.CreateListOfSize(10).Build();
             foreach (Account account in accountList)
@@ -27,6 +28,19 @@ namespace MiniTrello.DatabaseDeployer
                 }
                 account.AddBoard(boards[0]);
                 account.AddBoard(boards[1]);
+                _session.Save(account);
+            }
+            var account1 = new Account();
+            
+
+        }*/
+        public void Seed()
+        {
+            var acount = new Board();
+            var accountList = (IList<Account>) acount.Members;
+            foreach (Account account in accountList)
+            {
+                account.AddBoard(AccountHelper.CreateBoard(account));
                 _session.Save(account);
             }
         }
